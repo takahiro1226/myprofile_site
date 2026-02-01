@@ -445,7 +445,9 @@
                 <div class="architecture-diagram">
                     <img src="img/myprofile-architecture.png" alt="AWS構成図" />
                 </div>
-                
+                <h3>💻 このページで使用したコード</h3>
+                    <p>💻 GitHub: <a href="https://github.com/takahiro1226/myprofile_site" target="_blank">https://github.com/takahiro1226/myprofile_site</a></p>
+
                 <!-- AWS構成図の説明 -->
                 <div class="architecture-description">
                     <h3>システム概要</h3>
@@ -460,7 +462,7 @@
                     <p><strong>S3 (Terraformステートバケット):</strong> Terraformの状態ファイル（tfstate）を安全に保管し、インフラの現在の状態を管理します。チーム開発時のステート管理にも対応しています。</p>
                     
                     <h4>🚀 CI/CDパイプライン</h4>
-                    <p><strong>GitHub Actions:</strong> GitHubリポジトリへのプッシュをトリガーに、自動的にHTMLファイルをS3バケットへアップロードします。手動デプロイの手間を省き、継続的なデリバリーを実現しています。</p>
+                    <p><strong>GitHub Actions:</strong> GitHub Actions: mainブランチへのマージ時に、HTMLファイルを自動的にS3へアップロードします。マージ後のデプロイ作業を自動化し、手動でのAWS操作を不要にしています。</p>
                     <p><strong>Terraform:</strong> インフラリソース（S3、CloudFront、Route 53）をコードで定義・管理します。変更履歴も追跡可能です。</p>
                     
                 </div>
