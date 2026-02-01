@@ -32,7 +32,7 @@ jobs:
     strategy:
       matrix:
         directory:
-          - "terraform" # Terraformコードが terraform/ ディレクトリにある
+          - "terraform"
     defaults:
       run:
         working-directory: ${{ matrix.directory }}

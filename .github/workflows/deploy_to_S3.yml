@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-    paths:  # HTML、CSS、画像ファイルが変更された時だけ実行
+    paths: 
       - 'index.html'
       - 'css/**'
       - 'img/**'
@@ -12,7 +12,7 @@ on:
       - main
     types:
       - closed
-  workflow_dispatch:  # 手動実行も可能に
+  workflow_dispatch: 
 
 permissions:
   id-token: write
@@ -21,7 +21,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # PRがマージされた時、またはmainへの直接push時、または手動実行時のみ実行
+    # PRがマージされた時、またはmainへの直接push時実行
     # かつ、terraformディレクトリの変更ではない場合
     if: |
       (github.event_name == 'push') ||
