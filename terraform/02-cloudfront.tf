@@ -23,7 +23,7 @@ resource "aws_cloudfront_distribution" "main" {
   is_ipv6_enabled     = true
   comment             = "CloudFront distribution for ${var.domain_name}"
   default_root_object = "index.html"
-  price_class         = "PriceClass_200" # US, Europe, Asia, Middle East, and Africa
+  price_class         = "PriceClass_200" # US, Europe, Asia, Middle East, Africa
   aliases             = [var.domain_name]
 
   # Origin configuration (S3 bucket)
@@ -48,8 +48,8 @@ resource "aws_cloudfront_distribution" "main" {
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 3600  # 1 hour
-    max_ttl                = 86400 # 24 hours
+    default_ttl            = 3600 
+    max_ttl                = 86400
     compress               = true
   }
 
@@ -69,8 +69,8 @@ resource "aws_cloudfront_distribution" "main" {
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 86400  # 24 hours
-    max_ttl                = 604800 # 7 days
+    default_ttl            = 86400
+    max_ttl                = 604800
     compress               = true
   }
 
@@ -90,8 +90,8 @@ resource "aws_cloudfront_distribution" "main" {
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 86400  # 24 hours
-    max_ttl                = 604800 # 7 days
+    default_ttl            = 86400 
+    max_ttl                = 604800
     compress               = true
   }
 
