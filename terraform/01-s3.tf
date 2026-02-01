@@ -8,7 +8,7 @@ resource "random_id" "bucket_suffix" {
 }
 
 # ------------------------------------------
-# S3 Bucket for Website Content
+# S3 Bucket for Website用コンテンツ
 # ------------------------------------------
 
 resource "aws_s3_bucket" "content" {
@@ -79,7 +79,7 @@ resource "aws_s3_bucket_policy" "content" {
 }
 
 # ------------------------------------------
-# S3 Bucket for Terraform State
+# S3 Bucket for Terraform State用
 # ------------------------------------------
 
 resource "aws_s3_bucket" "tfstate" {
