@@ -17,13 +17,11 @@ terraform {
   }
 
   # S3 Backend Configuration
-  # NOTE: コメントアウトして初回terraform applyを実行し、
-  # S3バケット作成後にコメントを外してterraform init -migrateを実行してください
-  # backend "s3" {
-  #   bucket = "myprofile-tfstate-662478938633"
-  #   key    = "myprofile/terraform.tfstate"
-  #   region = "ap-northeast-1"
-  # }
+  backend "s3" {
+    bucket = "myprofile-tfstate-662478938633"
+    key    = "myprofile/terraform.tfstate"
+    region = "ap-northeast-1"
+  }
 }
 
 # ==========================================
