@@ -78,6 +78,20 @@ resource "aws_s3_bucket_policy" "content" {
   })
 }
 
+# Lifecycle policy for content bucket (keep old versions for 30 days)
+resource "aws_s3_bucket_lifecycle_configuration" "content" {
+  bucket = aws_s3_bucket.content.id
+
+  rule {
+    id     = "delete-old-versions"
+    status = "Enabled"
+
+    noncurrent_version_expiration {
+      noncurrent_days = 30
+    }
+  }
+}
+
 # ------------------------------------------
 # S3 Bucket for Terraform State用
 # ------------------------------------------
