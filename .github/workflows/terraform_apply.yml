@@ -1,0 +1,71 @@
+name: "Workflow Terraform Apply"
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  ROLE_TO_ASSUME: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/wpsite_role
+  AWS_REGION: ap-northeast-1
+  TF_VAR_aws_account_id: ${{ vars.AWS_ACCOUNT_ID }}
+
+jobs:
+  terraform:
+    name: "Terraform Apply"
+    runs-on: ubuntu-latest
+    # マージされた時、または手動実行の時のみ実行
+    if: (github.event.pull_request.merged == true) || (github.event_name == 'workflow_dispatch')
+ 
+    strategy:
+      fail-fast: false
+      matrix:
+        directory:
+          - "terraform" # Terraformコードが terraform/ ディレクトリにある
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Terraform version
+        id: terraform-version
+        uses: bigwheel/get-terraform-version-action@v1.2.0
+        with:
+          path: "terraform"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ steps.terraform-version.outputs.terraform-version }}
+
+      - name: Setup AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -no-color
+
+      - name: Truncate terraform apply result
+        if: always()
+        run: |
+          # ログを環境変数に格納
+          echo "APPLY_LOG<<EOF" >> $GITHUB_ENV
+          echo "${{ steps.apply.outputs.stdout }}" | tail -c 60000 >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV

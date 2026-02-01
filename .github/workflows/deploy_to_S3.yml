@@ -1,0 +1,51 @@
+name: Deploy to S3
+on:
+  push:
+    branches:
+      - main
+    paths:  # HTML、CSS、画像ファイルが変更された時だけ実行
+      - 'index.html'
+      - 'css/**'
+      - 'img/**'
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:  # 手動実行も可能に
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # PRがマージされた時、またはmainへの直接push時、または手動実行時のみ実行
+    # かつ、terraformディレクトリの変更ではない場合
+    if: |
+      (github.event_name == 'push') ||
+      (github.event.pull_request.merged == true) ||
+      (github.event_name == 'workflow_dispatch')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      
+      - name: Upload files to S3
+        run: |
+          aws s3 cp index.html s3://${{ secrets.S3_BUCKET_NAME }}/index.html
+          aws s3 cp css/style.css s3://${{ secrets.S3_BUCKET_NAME }}/css/style.css
+          aws s3 cp img/myprofile-architecture.png s3://${{ secrets.S3_BUCKET_NAME }}/img/myprofile-architecture.png
+      
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
