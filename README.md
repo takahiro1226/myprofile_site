@@ -70,9 +70,7 @@ x-amz-cf-id: 5jknwyycOzlIv_jyjCcMSRqvB8ek2tebLIaFpODrz69pYJGD1tBnyQ==
 curl -I https://takahiro-work.click | grep x-cache
 
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-  
-                                 Dload  Upload   Total   Spent    Left  Speed
-                                 
+                                 Dload  Upload   Total   Spent    Left  Speed                               
   0 29052    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
   
 x-cache: Hit from cloudfront
