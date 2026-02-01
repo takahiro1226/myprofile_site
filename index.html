@@ -458,8 +458,9 @@
                     <p><strong>CloudFront,ACM</strong> グローバルCDNとして、世界中のエッジロケーションからコンテンツを配信します。ACMで発行したSSL/TLS証明書を使用し、HTTPS通信を実現しています。</p>
                     
                     <h4>💾 コンテンツ管理</h4>
-                    <p><strong>S3 (メインバケット):</strong> HTMLファイル（index.html）、CSS、画像などの静的コンテンツを格納し、CloudFront経由で配信します。バージョニングを有効化することで、万が一の際の復旧も可能です。</p>
+                    <p><strong>S3 (メインバケット):</strong> HTMLファイル（index.html）、CSS、画像などの静的コンテンツを格納し、CloudFront経由で配信します。</p>
                     <p><strong>S3 (Terraformステートバケット):</strong> Terraformの状態ファイル（tfstate）を安全に保管し、インフラの現在の状態を管理します。チーム開発時のステート管理にも対応しています。</p>
+                    <p>バージョニングを有効にし復旧もかのうにしています。ライフサイクルポリシーを30日にしています</p>
                     
                     <h4>🚀 CI/CDパイプライン</h4>
                     <p><strong>GitHub Actions:</strong> GitHub Actions: mainブランチへのマージ時に、HTMLファイルを自動的にS3へアップロードします。マージ後のデプロイ作業を自動化し、手動でのAWS操作を不要にしています。</p>
