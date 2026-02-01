@@ -24,14 +24,14 @@ jobs:
   terraform:
     name: "Terraform Apply"
     runs-on: ubuntu-latest
-    # マージされた時、または手動実行の時のみ実行
+    # マージされた時実行
     if: (github.event.pull_request.merged == true) || (github.event_name == 'workflow_dispatch')
  
     strategy:
       fail-fast: false
       matrix:
         directory:
-          - "terraform" # Terraformコードが terraform/ ディレクトリにある
+          - "terraform"
     defaults:
       run:
         working-directory: ${{ matrix.directory }}
