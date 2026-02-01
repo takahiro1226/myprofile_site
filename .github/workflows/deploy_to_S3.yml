@@ -21,13 +21,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # PRがマージされた時、またはmainへの直接push時実行
-    # かつ、terraformディレクトリの変更ではない場合
-    if: |
-      (github.event_name == 'push') ||
-      (github.event.pull_request.merged == true) ||
-      (github.event_name == 'workflow_dispatch')
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
